@@ -1,4 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
+import imagen from "../../public/img/carrito.png";
 function Navegacion() {
     const location = useLocation();
     return (
@@ -13,8 +14,8 @@ function Navegacion() {
                 Nosotros
             </Link>
             <Link
-                to="/tienda"
-                className={location.pathname === "/tienda" ? "active" : ""}
+                to="/guitarras"
+                className={location.pathname === "/guitarras" ? "active" : ""}
             >
                 Tienda
             </Link>
@@ -23,6 +24,10 @@ function Navegacion() {
                 className={location.pathname === "/blog" ? "active" : ""}
             >
                 Blog
+            </Link>
+
+            <Link to="/carrito">
+                <img src={imagen} alt="carrito de compras" />
             </Link>
         </nav>
     );
