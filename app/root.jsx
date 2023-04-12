@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
     Meta,
     Links,
@@ -48,9 +49,14 @@ export function links() {
 }
 
 export default function App() {
+    const [carrito, setCarrito] = useState([]);
+    const agregarCarrito = (guitarra) => {
+        console.log("Agregando...", guitarra);
+        setCarrito([...carrito, guitarra]);
+    };
     return (
         <Document>
-            <Outlet />
+            <Outlet context={{ agregarCarrito: agregarCarrito }} />
         </Document>
     );
 }
@@ -81,7 +87,9 @@ export function CatchBoundary() {
             <p className="error">
                 Error inexperado: {error.status} - {error.statusText}
             </p>
-            <Link className="error-enlace" to="/">Volver a la pagina principal</Link>
+            <Link className="error-enlace" to="/">
+                Volver a la pagina principal
+            </Link>
         </Document>
     );
 }
@@ -90,9 +98,11 @@ export function ErrorBoundary({ error }) {
     return (
         <Document>
             <p className="error">
-            Error inexperado: {error.status} - {error.statusText}
+                Error inexperado: {error.status} - {error.statusText}
             </p>
-            <Link className="error-enlace" to="/">Volver a la pagina principal</Link>
+            <Link className="error-enlace" to="/">
+                Volver a la pagina principal
+            </Link>
         </Document>
     );
 }
