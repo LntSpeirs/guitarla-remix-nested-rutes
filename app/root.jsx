@@ -52,7 +52,24 @@ export default function App() {
     const [carrito, setCarrito] = useState([]);
     const agregarCarrito = (guitarra) => {
         console.log("Agregando...", guitarra);
-        setCarrito([...carrito, guitarra]);
+        if (carrito.some((guitarraState) => guitarraState.id === guitarra.id)) {
+            console.log("Ese elemento ya estaba en el carrito");
+            //Iterar sobre el arreglo e identificar el elemento duplicado
+            const carritoActualizado = carrito.map((guitarraState) => {
+                if (guitarraState.id === guitarra.id) {
+                    //Reescribir la cantidad
+                    guitarraState.cantidad = guitarra.cantidad;
+                    //Tambien se podria variar para que a la cantidad que ya habia le añada mas unidades
+                    //guitarraState.cantidad += guitarra.cantidad;
+                }
+                return guitarraState;
+            });
+            //Añadir al carrito
+            setCarrito(carritoActualizado)
+        } else {
+            //Registro nuevo asi que podemos agregar al carrito
+            setCarrito([...carrito, guitarra]);
+        }
     };
     return (
         <Document>
