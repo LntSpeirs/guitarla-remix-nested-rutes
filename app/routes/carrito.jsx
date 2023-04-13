@@ -38,9 +38,9 @@ const carrito = () => {
             <div className="contenido">
                 <div className="carrito">
                     <h2>Articulos</h2>
-                    {carrito.length === 0
+                    {carrito?.length === 0
                         ? "Carrito vacio"
-                        : carrito.map((producto) => {
+                        : carrito?.map((producto) => {
                               return (
                                   <div key={producto.id} className="producto">
                                       <div>

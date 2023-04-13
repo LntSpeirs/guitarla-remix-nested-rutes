@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
     Meta,
     Links,
@@ -49,7 +49,16 @@ export function links() {
 }
 
 export default function App() {
-    const [carrito, setCarrito] = useState([]);
+    const carritoLocalStorage =
+        typeof window !== "undefined"
+            ? JSON.parse(localStorage.getItem("carrito")) ?? []
+            : null;
+    const [carrito, setCarrito] = useState(carritoLocalStorage);
+
+    //Localstorage hay que ponerlo dentro de un useeffect en Remix para que se ejecute en el lado del cliente, sino se ejecutaria en el lado del servidor
+    useEffect(() => {
+        localStorage.setItem("carrito", JSON.stringify(carrito));
+    }, [carrito]);
 
     const agregarCarrito = (guitarra) => {
         console.log("Agregando...", guitarra);
@@ -85,7 +94,7 @@ export default function App() {
 
     const eliminarGuitarra = (id) => {
         console.log("Eliminando...", id);
-        //forma corta 
+        //forma corta
         setCarrito(carrito.filter((guitarraState) => guitarraState.id !== id));
         //forma entendible
         /* const carritoActualizado = carrito.filter((guitarraState) => guitarraState.id !== id)
