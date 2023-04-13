@@ -50,6 +50,7 @@ export function links() {
 
 export default function App() {
     const [carrito, setCarrito] = useState([]);
+
     const agregarCarrito = (guitarra) => {
         console.log("Agregando...", guitarra);
         if (carrito.some((guitarraState) => guitarraState.id === guitarra.id)) {
@@ -65,15 +66,43 @@ export default function App() {
                 return guitarraState;
             });
             //Añadir al carrito
-            setCarrito(carritoActualizado)
+            setCarrito(carritoActualizado);
         } else {
             //Registro nuevo asi que podemos agregar al carrito
             setCarrito([...carrito, guitarra]);
         }
     };
+
+    const actualizarCantidad = (guitarra) => {
+        const carritoActualizado = carrito.map((guitarraState) => {
+            if (guitarraState.id === guitarra.id) {
+                guitarraState.cantidad = guitarra.cantidad;
+            }
+            return guitarraState;
+        });
+        setCarrito(carritoActualizado);
+    };
+
+    const eliminarGuitarra = (id) => {
+        console.log("Eliminando...", id);
+        //forma corta 
+        setCarrito(carrito.filter((guitarraState) => guitarraState.id !== id));
+        //forma entendible
+        /* const carritoActualizado = carrito.filter((guitarraState) => guitarraState.id !== id)
+        });
+        setCarrito(carritoActualizado) */
+    };
+
     return (
         <Document>
-            <Outlet context={{ agregarCarrito: agregarCarrito }} />
+            <Outlet
+                context={{
+                    agregarCarrito: agregarCarrito,
+                    carrito,
+                    actualizarCantidad,
+                    eliminarGuitarra,
+                }}
+            />
         </Document>
     );
 }
